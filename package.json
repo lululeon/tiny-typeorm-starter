@@ -1,0 +1,37 @@
+{
+   "name": "tiny-typeorm-starter",
+   "version": "0.0.1",
+   "description": "Tiny TypeORM Starter",
+   "author": "lululeon<thelululeon@gmail.com>",
+   "repository": "git@github.com:lululeon/tiny-typeorm-starter.git",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/node": "^8.0.29",
+      "@typescript-eslint/eslint-plugin": "^4.29.1",
+      "@typescript-eslint/parser": "^4.29.1",
+      "eslint": "^7.32.0",
+      "eslint-config-prettier": "^8.3.0",
+      "eslint-plugin-prettier": "^3.4.0",
+      "nodemon": "^2.0.12",
+      "prettier": "2.3.2",
+      "ts-node": "3.3.0",
+      "tsconfig-paths": "^3.10.1",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "cross-env": "^7.0.3",
+      "dotenv": "^10.0.0",
+      "envalid": "^7.1.1",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.36"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "lint": "eslint --ext .ts src/",
+      "up": "docker-compose up -d",
+      "rebuild": "docker-compose up --build -d",
+      "down": "docker-compose down",
+      "dev": "cross-env NODE_ENV=development nodemon"
+   }
+}
