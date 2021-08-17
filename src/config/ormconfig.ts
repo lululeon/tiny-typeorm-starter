@@ -7,6 +7,20 @@ const user = env.DB_USER
 const password = env.DB_PASS
 const database = env.DB_NAME
 
+const fileSet = env.isProduction
+  ? {
+      // transpiled build
+      entities: ['src/entity/**/*.js'],
+      migrations: ['src/migration/**/*.js'],
+      subscribers: ['src/subscriber/**/*.js'],
+    }
+  : {
+      entities: ['src/entity/**/*.ts'],
+      migrations: ['src/migration/**/*.ts'],
+      subscribers: ['src/subscriber/**/*.ts'],
+    }
+
+// see: https://github.com/typeorm/typeorm/blob/master/docs/connection-options.md
 const dbConnOptions: ConnectionOptions = {
   type: 'postgres',
   host: host,
@@ -14,11 +28,9 @@ const dbConnOptions: ConnectionOptions = {
   username: user,
   password: password,
   database: database,
-  synchronize: true,
-  logging: false,
-  entities: ['src/entity/**/*.ts'],
-  migrations: ['src/migration/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
+  synchronize: env.isProduction ? false : true,
+  logging: env.isProduction ? false : true,
+  ...fileSet,
   cli: {
     entitiesDir: 'src/entity',
     migrationsDir: 'src/migration',

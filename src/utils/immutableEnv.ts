@@ -4,7 +4,7 @@ dotenv.config()
 import { cleanEnv, str, host, port, bool } from 'envalid'
 
 const env = cleanEnv(process.env, {
-  NODE_ENV: str(),
+  NODE_ENV: str({ choices: ['development', 'test', 'production'] }),
 
   // server
   PORT: port(),

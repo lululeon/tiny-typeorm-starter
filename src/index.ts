@@ -1,15 +1,16 @@
 import 'reflect-metadata'
-import { createConnection } from 'typeorm'
-import { Account } from './entity/Account'
-import dbConnection from '@config/ormconfig'
+import env from '@utils/immutableEnv'
+import { Account } from '@entity/Account'
+import { connectToDB } from '@utils/database'
+import express, { Request, Response, NextFunction, Express } from 'express'
+import cors from 'cors'
+import Routes from './routes'
+import { fakeAccount } from '@utils/mockData'
 
-createConnection(dbConnection)
+connectToDB()
   .then(async connection => {
     console.log('Inserting new account into database...')
-    const account = new Account()
-    account.firstName = 'Timber'
-    account.lastName = 'Saw'
-    account.age = 25
+    const account = fakeAccount()
     await connection.manager.save(account)
     console.log('Saved a new user with account id: ' + account.id)
 
@@ -18,3 +19,27 @@ createConnection(dbConnection)
     console.log('Loaded users: ', accounts)
   })
   .catch(error => console.log(error))
+
+// create express app
+const app: Express = express()
+app.use(cors({ origin: env.CORS_ORIGIN, credentials: env.CORS_CREDENTIALS }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// register express routes from defined application routes
+Routes.forEach(route => {
+  app[route.method](route.route, (req: Request, res: Response, next: NextFunction) => {
+    const appController = route.controller
+    const result = new appController()[route.action](req, res, next)
+    if (result instanceof Promise) {
+      result.then(result => (result !== null && result !== undefined ? res.send(result) : undefined))
+    } else if (result !== null && result !== undefined) {
+      res.json(result)
+    }
+  })
+})
+
+// start express server
+app.listen(env.PORT, () => {
+  console.log(`Listening on port ${env.PORT} !`)
+})
