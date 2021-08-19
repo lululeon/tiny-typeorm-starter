@@ -1,7 +1,8 @@
-import { getRepository } from 'typeorm'
+import { getRepository, UpdateResult } from 'typeorm'
 import { NextFunction, Request, Response } from 'express'
 import { Account } from '@entity/Account'
 
+// TODO: trycatch / handle orm methods failing.
 export default class AccountController {
   private accountRepository = getRepository(Account)
 
@@ -17,8 +18,7 @@ export default class AccountController {
     return this.accountRepository.save(request.body)
   }
 
-  public remove = async (request: Request, _response: Response, _next: NextFunction): Promise<void> => {
-    const accountToRemove = await this.accountRepository.findOne(request.params.id)
-    await this.accountRepository.remove(accountToRemove)
+  public remove = async (request: Request, _response: Response, _next: NextFunction): Promise<UpdateResult> => {
+    return this.accountRepository.softDelete(request.params.id)
   }
 }

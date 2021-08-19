@@ -11,25 +11,25 @@ export interface RouteConfig {
 const Routes = [
   {
     method: 'get',
-    route: '/users',
+    route: '/api/accounts',
     controller: AccountController,
     action: 'all',
   },
   {
     method: 'get',
-    route: '/users/:id',
+    route: '/api/accounts/:id',
     controller: AccountController,
     action: 'one',
   },
   {
     method: 'post',
-    route: '/users',
+    route: '/api/accounts',
     controller: AccountController,
     action: 'save',
   },
   {
     method: 'delete',
-    route: '/users/:id',
+    route: '/api/accounts/:id',
     controller: AccountController,
     action: 'remove',
   },
