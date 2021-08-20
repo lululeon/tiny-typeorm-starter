@@ -21,6 +21,7 @@
     "importHelpers": true,
     "baseUrl": "src",
     "paths": {
+      "@/*": ["*"],
       "@config/*": ["config/*"],
       "@controller/*": ["controller/*"],
       "@entity/*": ["entity/*"],

@@ -26,3 +26,12 @@ export const connectToDB = async (): Promise<Connection> => {
 
   return connection
 }
+
+export const disconnectDB = async (connection: Connection): Promise<void> => {
+  try {
+    await connection.close()
+  } catch (error) {
+    console.error('ERROR: failed to closed db connection!!')
+    throw error
+  }
+}

@@ -1,5 +1,7 @@
 import 'reflect-metadata'
 import env from '@utils/immutableEnv'
+import { Server as HTTPServer } from 'http'
+import { Connection } from 'typeorm'
 import express, { Request, Response, NextFunction, Application } from 'express'
 import cors from 'cors'
 import Routes from './routes'
@@ -7,6 +9,8 @@ import { connectToDB } from '@utils/database'
 
 class App {
   public app: Application
+  private httpServer: HTTPServer
+  private dbConnection: Connection
 
   constructor() {
     // create express app
@@ -29,13 +33,26 @@ class App {
     })
   }
 
-  public listen(): void {
+  public async start(): Promise<void> {
     // establish db connection first. If it fails, let app crash
-    connectToDB().then(() => {
-      this.app.listen(env.PORT, () => {
-        console.log(`Listening on port ${env.PORT} !`)
+    this.dbConnection = await connectToDB()
+    this.httpServer = this.app.listen(env.PORT, () => {
+      console.log(`Listening on port ${env.PORT} !`)
+    })
+  }
+
+  public async stop(): Promise<void> {
+    return new Promise((resolve, _reject) => {
+      this.httpServer.close(async () => {
+        console.log('Server stopped. Closing db connection...')
+        await this.dbConnection.close()
+        resolve()
       })
     })
+  }
+
+  public getServer(): Application {
+    return this.app
   }
 }
 

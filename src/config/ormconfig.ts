@@ -29,7 +29,7 @@ const dbConnOptions: ConnectionOptions = {
   password: password,
   database: database,
   synchronize: env.isProduction ? false : true,
-  logging: env.isProduction ? false : true,
+  logging: env.isProduction || env.isTest ? false : true,
   ...fileSet,
   cli: {
     entitiesDir: 'src/entity',
