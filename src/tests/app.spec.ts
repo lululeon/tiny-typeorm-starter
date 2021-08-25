@@ -12,9 +12,13 @@ test('app starts ok', async () => {
 
 test('app handles a create action', async () => {
   const account = fakeAccount()
-  const response = await request(app.getServer()).post('/api/accounts').send(account)
+  const response = await request(app.getServer())
+    .post('/api/accounts')
+    .send(account)
   expect(response.statusCode).toBe(200)
-  expect(response.headers['content-type']).toEqual(expect.stringContaining('json'))
+  expect(response.headers['content-type']).toEqual(
+    expect.stringContaining('json'),
+  )
   expect(response.body.id).toBeDefined
   expect(response.body.createdAt).toBeDefined
   expect(response.body.updatedAt).toEqual(response.body.createdAt)
@@ -24,9 +28,13 @@ test('app handles a create action', async () => {
 })
 
 test('app handles get single entity by id', async () => {
-  const response = await request(app.getServer()).get(`/api/accounts/${testAccount.id}`)
+  const response = await request(app.getServer()).get(
+    `/api/accounts/${testAccount.id}`,
+  )
   expect(response.statusCode).toBe(200)
-  expect(response.headers['content-type']).toEqual(expect.stringContaining('json'))
+  expect(response.headers['content-type']).toEqual(
+    expect.stringContaining('json'),
+  )
   expect(response.body.id).toBeDefined
   expect(response.body.createdAt).toBeDefined
   expect(response.body.updatedAt).toEqual(response.body.createdAt)
@@ -37,9 +45,13 @@ test('app handles get single entity by id', async () => {
 
 test('app handles a soft delete - affects 1', async () => {
   await wait(1500) // arbitrary delay so that timestamps differ
-  const response = await request(app.getServer()).delete(`/api/accounts/${testAccount.id}`)
+  const response = await request(app.getServer()).delete(
+    `/api/accounts/${testAccount.id}`,
+  )
   expect(response.statusCode).toBe(200)
-  expect(response.headers['content-type']).toEqual(expect.stringContaining('json'))
+  expect(response.headers['content-type']).toEqual(
+    expect.stringContaining('json'),
+  )
   expect(response.body.affected).toEqual(1)
 })
 

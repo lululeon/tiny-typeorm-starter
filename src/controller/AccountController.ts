@@ -6,19 +6,35 @@ import { Account } from '@entity/Account'
 export default class AccountController {
   private accountRepository = getRepository(Account)
 
-  public all = async (_request: Request, _response: Response, _next: NextFunction): Promise<Account[]> => {
+  public all = async (
+    _request: Request,
+    _response: Response,
+    _next: NextFunction,
+  ): Promise<Account[]> => {
     return this.accountRepository.find()
   }
 
-  public one = async (request: Request, _response: Response, _next: NextFunction): Promise<Account> => {
+  public one = async (
+    request: Request,
+    _response: Response,
+    _next: NextFunction,
+  ): Promise<Account> => {
     return this.accountRepository.findOne(request.params.id)
   }
 
-  public save = async (request: Request, _response: Response, _next: NextFunction): Promise<unknown> => {
+  public save = async (
+    request: Request,
+    _response: Response,
+    _next: NextFunction,
+  ): Promise<unknown> => {
     return this.accountRepository.save(request.body)
   }
 
-  public remove = async (request: Request, _response: Response, _next: NextFunction): Promise<UpdateResult> => {
+  public remove = async (
+    request: Request,
+    _response: Response,
+    _next: NextFunction,
+  ): Promise<UpdateResult> => {
     return this.accountRepository.softDelete(request.params.id)
   }
 }

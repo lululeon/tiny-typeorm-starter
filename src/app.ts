@@ -15,21 +15,30 @@ class App {
   constructor() {
     // create express app
     this.app = express()
-    this.app.use(cors({ origin: env.CORS_ORIGIN, credentials: env.CORS_CREDENTIALS }))
+    this.app.use(
+      cors({ origin: env.CORS_ORIGIN, credentials: env.CORS_CREDENTIALS }),
+    )
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
 
     // register express routes from defined application routes, e.g. app.post('/api/foo', (req,res,next) => {}))
     Routes.forEach(route => {
-      this.app[route.method](route.route, (req: Request, res: Response, next: NextFunction) => {
-        const appController = route.controller
-        const result = new appController()[route.action](req, res, next)
-        if (result instanceof Promise) {
-          result.then(result => (result !== null && result !== undefined ? res.send(result) : undefined))
-        } else if (result !== null && result !== undefined) {
-          res.json(result)
-        }
-      })
+      this.app[route.method](
+        route.route,
+        (req: Request, res: Response, next: NextFunction) => {
+          const appController = route.controller
+          const result = new appController()[route.action](req, res, next)
+          if (result instanceof Promise) {
+            result.then(result =>
+              result !== null && result !== undefined
+                ? res.send(result)
+                : undefined,
+            )
+          } else if (result !== null && result !== undefined) {
+            res.json(result)
+          }
+        },
+      )
     })
   }
 

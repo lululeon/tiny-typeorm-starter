@@ -1,4 +1,11 @@
-import { Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, Column } from 'typeorm'
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  Column,
+} from 'typeorm'
 
 // see: https://typeorm.io/#/entities/column-types
 @Entity()
