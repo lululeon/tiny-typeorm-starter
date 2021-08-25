@@ -4,7 +4,10 @@ dotenv.config()
 import { cleanEnv, str, host, port, bool } from 'envalid'
 
 const env = cleanEnv(process.env, {
-  NODE_ENV: str({ choices: ['development', 'test', 'production'] }),
+  NODE_ENV: str({
+    choices: ['development', 'test', 'production'],
+    default: 'production',
+  }),
 
   // server
   PORT: port(),
@@ -20,4 +23,5 @@ const env = cleanEnv(process.env, {
   DB_PASS: str(),
 })
 
+console.log('**** env:', env)
 export default env
