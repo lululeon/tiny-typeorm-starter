@@ -31,10 +31,10 @@ jobs:
         with:
           node-version: '14'
       - name: Install
-      - run: npm ci
+        run: npm ci
       - name: Lint
-      - run: npm run lint
-      - name: Tests
-      - run: chmod +x ./scripts/ci-wait-for-pg.sh
-      - run: ./scripts/ci-wait-for-pg.sh
-      - run: npm run test
+        run: npm run lint
+      - name: Wait for postgres
+        run: chmod +x ./scripts/ci-wait-for-pg.sh && ./scripts/ci-wait-for-pg.sh
+      - name: Run tests
+        run: npm run test
