@@ -44,7 +44,6 @@
       "rebuild": "docker-compose up --build -d",
       "down": "docker-compose down",
       "dev": "cross-env NODE_ENV=development nodemon",
-      "test": "jest",
-      "ci:installchk": "scripts/ci-install-check.sh"
+      "test": "jest"
    }
 }
