@@ -2,16 +2,19 @@ name: checks
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
-    uses: actions/checkout@v2
-    uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    run: npm run lint
-    run: npm ci
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm run lint
+      - run: npm ci
   test:
+    runs-on: "ubuntu-latest"
     # will this be sufficient
     needs: build
-    # temp: do nothing for now
-    run: npm run ci:installchk
+    steps:
+      # temp: do nothing for now
+      - run: npm run ci:installchk
 
