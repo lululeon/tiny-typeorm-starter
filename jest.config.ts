@@ -10,7 +10,8 @@ const {
 const config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: [`${rootDir}/src`],
+  rootDir: `${rootDir}/src`,
+  // roots: [`${rootDir}/src`],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
