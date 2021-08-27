@@ -23,5 +23,4 @@ const env = cleanEnv(process.env, {
   DB_PASS: str(),
 })
 
-console.log('**** env:', env)
 export default env
