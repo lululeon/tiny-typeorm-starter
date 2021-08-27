@@ -45,6 +45,6 @@
       "down": "docker-compose down",
       "dev": "cross-env NODE_ENV=development nodemon",
       "test": "jest",
-      "ci:installchk": "eval $([ -f ./node_modules ]) && echo 'install completed'"
+      "ci:installchk": "scripts/ci-install-check.sh"
    }
 }

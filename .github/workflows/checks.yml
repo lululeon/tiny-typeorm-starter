@@ -16,5 +16,6 @@ jobs:
     needs: build
     steps:
       # temp: do nothing for now
+      - run: chmod +x ./scripts/ci-install-check.sh
       - run: npm run ci:installchk
 
