@@ -1,5 +1,11 @@
 name: Install, build and test
-on: [push, pull_request]
+on: 
+  push: 
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+    
 jobs:
   ci-checks:
     runs-on: "ubuntu-latest"
